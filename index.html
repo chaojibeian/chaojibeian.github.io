@@ -1,0 +1,87 @@
+<script type="text/javascript"  src="https://fastly.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- ui组件 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js" integrity="sha512-LBh0vC8hNru7991yk7vBb3tiBCU41shGOowGRnLqz63KYedvNQOyGOKHnl/pHSRYJ2P45bjzALArvDDHSSc2KA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/css/mdui.min.css" integrity="sha512-Hh2syGXSuZabqBNcdvPiGo67ASyKhlKTZV9lLOmJp10qZ1v8/YPeuZBoOh0WmS/UPwWtRzQhNJfYyKDAhdGocQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- 发邮件 -->
+<script type="text/javascript">
+    function send_mail() {
+      emailjs.init("o_Kuy8g2Wx073luwt"); emailjs.send("service_6nxv0cl","template_yxpibuk",{
+message: document.getElementById("bei_num").value + document.getElementById("link").value,
+mail: "5600843267896543267shenhe@chinaweb.wiki"
+});
+}
+</script>
+<!-- recaptcha验证 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<form>
+  <!-- <div class="g-recaptcha" data-sitekey="6LcvyYMfAAAAALmAlNUyKU6AvPEleizC80yJqAhC"></div> -->
+  <!-- <input type="button" onclick="checkRecaptcha();" value="submit"></input> --></form>
+<script> 
+function checkRecaptcha() {
+  var response = grecaptcha.getResponse();
+  if(response.length == 0) { 
+    //reCaptcha not verified
+    //alert("no pass"); 
+  }
+  else { 
+    //reCaptch verified
+    //alert("pass"); 
+    send_mail();
+    Swal.fire(
+      "申请成功",
+      "请稍等审核",
+      "success"
+)
+  }
+}
+
+// implement on the backend
+function backend_API_challenge() {
+    var response = grecaptcha.getResponse();
+    $.ajax({
+        type: "POST",
+        url: 'https://www.google.com/recaptcha/api/siteverify',
+        data: {"secret" : "6LcvyYMfAAAAAIcOOaZD2C4Y3Adlo4NvRdauMa8l", "response" : response, "remoteip":"localhost"},
+        contentType: 'application/x-www-form-urlencoded',
+        success: function(data) { console.log(data); }
+    });
+}
+</script>
+<!-- 顶栏 -->
+<div class="mdui-toolbar mdui-color-theme mdui-ripple">
+  <a href="javascript:;" class="mdui-btn mdui-btn-icon">
+    <i class="mdui-icon material-icons">menu</i>
+  </a>
+  <span class="mdui-typo-title">超级备案</span>
+  <div class="mdui-toolbar-spacer"></div>
+  <a href="javascript:;" class="mdui-btn mdui-btn-icon">
+    <i class="mdui-icon material-icons">search</i>
+  </a>
+  <a href="javascript:;" class="mdui-btn mdui-btn-icon">
+    <i class="mdui-icon material-icons">refresh</i>
+  </a>
+  <a href="javascript:;" class="mdui-btn mdui-btn-icon">
+    <i class="mdui-icon material-icons">more_vert</i>
+  </a>
+</div>
+<!-- 主画面 -->
+<div class="mdui-textfield">
+  <input id="bei_num" class="mdui-textfield-input" type="text" placeholder="备案号"/>
+<input id="link" class="mdui-textfield-input" type="text" placeholder="网址(非80/443请带端口)"/>  
+<div class="g-recaptcha" data-sitekey="6LcvyYMfAAAAALmAlNUyKU6AvPEleizC80yJqAhC"></div>
+<button class="mdui-btn mdui-color-theme-accent mdui-ripple" onclick="checkRecaptcha();">提交申请</button>
+</div>
+<!-- <p>备案号</p>
+<input id="bei_num" type="text"></input>
+<p>网址(非80/443请带端口)</p>
+<input id="link" type="text"></input>
+<div class="g-recaptcha" data-sitekey="6LcvyYMfAAAAALmAlNUyKU6AvPEleizC80yJqAhC"></div>
+<input type="button" onclick="checkRecaptcha();" value="提交申请"></input> -->
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/chaojibeian/chaojibeian.github.io" data-show-count="true" aria-label="Star chaojibeian/chaojibeian.github.io on GitHub">Star</a>
+<a style="color:red;" href="https://t.me/MoeMeta1">Telegram频道</a>
